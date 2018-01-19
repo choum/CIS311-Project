@@ -69,14 +69,20 @@
       </div>
     </div>
   </nav>
+
+  <!--ALERT-->
+<div id="alerts">
+	<div id="namealert"></div>
+	<div id="passalert"></div>
+</div>
   <!--LOGIN FORM-->
   <div class="container" align="center">
     <div class="row" style="margin-top:10px">
-      <form role="form">
+      <form role="form" id="form_val">
         <fieldset>
           <h2 style="margin:10px">LOGIN</h2>
           <div class="form-group" style="margin:10px">
-            <input type="email" name="email" id="email" placeholder="Email Address">
+            <input type="text" name="username" id="username" placeholder="Username">
           </div>
           <div class="form-group">
             <input type="password" name="password" id="password" placeholder="Password">
@@ -93,9 +99,52 @@
     <hr>
     <p>&copy; 2017 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
   </footer>
-  <script>
-    //all js in here
-    function myFunction() {}
+  <script type="text/javascript">
+  var badname = "<div class='alert alert-danger' role='alert'><strog>Warning!  </strong>Name does not match our records.</div>";
+  var badpass = "<div class='alert alert-danger' role='alert'><strog>Warning!  </strong>Password does not match our records.</div>";
+
+  var person = {
+  	username: "admin",
+  	password: "admin"
+  };
+
+  function validateForm() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var spaces = /^\\s*$/;
+      if (spaces.test(username)) {
+          ////return true;
+      } else {
+          alert('Invalid username: ' + username);
+          //return false;
+      }
+      if (spaces.test(password)) {
+          //return true;
+      } else {
+          alert('Invalid password: ' + password);
+          //return false;
+      }
+  }
+
+  function inputMatch() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      var bool = true;
+
+     if(username != person.username) {
+     	document.getElementById('namealert').innerHTML = badname;
+  	 bool = false;
+     }
+     if(password != person.password) {
+     	document.getElementById('passalert').innerHTML = badpass;
+  	 bool = false;
+     }
+     	return bool;
+  }
+  window.onload = function() {
+      //document.getElementById('form_val').onsubmit = validateForm;
+      document.getElementById('form_val').onsubmit = inputMatch;
+  }
   </script>
   <!-- Bootstrap core JavaScript
  ================================================== -->

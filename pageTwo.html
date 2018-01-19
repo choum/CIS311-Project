@@ -71,10 +71,17 @@
     </div>
   </nav>
 
+<!--ALERTS--------------------------------------------->
+<div id="alerts">
+  <div id="firstAlert"></div>
+  <div id="lastAlert"></div>
+  <div id="usernameAlert"></div>
+  <div id="emailAlert"></div>
+</div>
   <!--REGISTER---------------------------------------------------------------------------->
   <div class="container" align="center">
     <div class="row">
-      <form role="form">
+      <form role="form" id=registerForm>
         <h2 style="margin:30px">REGISTER</h2>
         <div class="row">
           <div class="form-group">
@@ -84,18 +91,10 @@
             <input type="text" name="last_name" id="last_name" placeholder="Last Name" tabindex="2">
           </div>
           <div class="form-group">
-            <input type="text" name="display_name" id="display_name" placeholder="Display Name" tabindex="3">
+            <input type="text" name="display_name" id="username" placeholder="Display Name" tabindex="3">
           </div>
           <div class="form-group">
             <input type="email" name="email" id="email" placeholder="Email Address" tabindex="4">
-          </div>
-          <div class="row">
-            <div class="form-group">
-              <input type="password" name="password" id="password" placeholder="Password" tabindex="5">
-            </div>
-            <div class="form-group" style=>
-              <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password" tabindex="6">
-            </div>
           </div>
           <div class="row" style="margin:20px">
             <input type="submit" value="Register" class="btn btn-info " tabindex="7">
@@ -111,9 +110,76 @@
     </footer>
 
 
-    <script>
-      //all js in here
-      function myFunction() {}
+    <script type="text/javascript">
+    var bademail = "<div class='alert alert-danger'><strong>Warning!  </strong>This email does not match our records.</div>";
+    var badFirstName = "<div class='alert alert-danger'><strong>Warning!  </strong>This first name does not match our records.</div>";
+    var badLastName = "<div class='alert alert-danger'><strong>Warning!  </strong>This last name does not match our records.</div>";
+    var badUsername = "<div class='alert alert-danger'><strong>Warning!  </strong>This username does not match our records.</div>";
+    var person = {
+    	email: "name@mail.com",
+      firstname: "John",
+      last_name: "Doe",
+      username: "admin"
+    	};
+
+
+    function validateInput() {
+        //check email
+        var emailText = document.getElementById('email').value;
+        var pattern = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+        if (pattern.test(emailText)) {
+    	    if(emailText != person.email) {
+    	    	document.getElementById('emailAlert').innerHTML = bademail;
+    		return false;
+    	    }
+            return true;
+        } else {
+            alert('Incorrect e-mail format: ' + emailText);
+            return false;
+        }
+        //Check firstname
+        var firstNameText = document.getElementById('first_name');
+        var spaces = /^\\s*$/;
+        if (spaces.test(firstNameText)) {
+          if(firstNameText !=person.firstname) {
+            document.getElementById('firstAlert').innerHTML = badFirstName;
+            return false;
+          }
+          return true;
+        } else {
+            alert('Incorrect first name format: ' + firstNameText);
+            return false;
+          }
+        //check last_name
+        var lastNameText = document.getElementById('last_name');
+        var spaces = /^\\s*$/;
+        if (spaces.test(lastNameText)) {
+          if(lastNameText !=person.lastname) {
+            document.getElementById('lastAlert').innerHTML = badLastName;
+          }
+          return true;
+        } else {
+          alert('Incorrect last name format: ' + lastNameText);
+          return false;
+        }
+
+        //check username
+        var usernameText = document.getElementById('username');
+        var spaces = /^\\s*$/;
+        if (spaces.test(usernameText)) {
+          if(usernameText !=person.lastname) {
+            document.getElementById('usernameAlert').innerHTML = badUsername;
+          }
+          return true;
+        } else {
+          alert('Incorrect username format: ' + usernameText);
+          return false;
+        }
+      }
+    window.onload = function() {
+        document.getElementById('registerForm').onsubmit = validateInput;
+    }
+
     </script>
     <!-- Bootstrap core JavaScript
  ================================================== -->
